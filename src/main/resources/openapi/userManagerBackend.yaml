@@ -1,0 +1,300 @@
+openapi: 3.0.3
+info:
+  title: DeviceManager API
+  description: A RESTful API for managing a database of devices. Supports CRUD operations.
+  version: 1.0.0
+  contact:
+    name: Pollito
+    url: https://pollito.dev
+servers:
+  - url: 'http://localhost:8080'
+paths:
+  /device:
+    get:
+      tags:
+        - Device
+      operationId: getAll
+      summary: List all devices
+      parameters:
+        - description: Use this parameter to specify the page of your request
+          in: query
+          name: pageNumber
+          schema:
+            default: 0
+            minimum: 0
+            type: integer
+        - description: Use this parameter to specify a pagination limit (number of results per page) for your request
+          in: query
+          name: pageSize
+          schema:
+            default: 10
+            maximum: 10
+            minimum: 1
+            type: integer
+        - description: Use this parameter to specify the property by which you want to sort the results of your request
+          in: query
+          name: sortProperty
+          schema:
+            $ref: '#/components/schemas/DeviceSortProperty'
+        - description: Use this parameter to specify the direction (asc or desc) of your request results
+          in: query
+          name: sortDirection
+          schema:
+            $ref: '#/components/schemas/SortDirection'
+        - description: Use this parameter to filter devices by brand (ignore case). If not used, no filtering will be done.
+          in: query
+          name: brand
+          schema:
+            minLength: 1
+            type: string
+      responses:
+        '200':
+          description: List of all devices
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Devices'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - Device
+      operationId: addDevice
+      summary: Add device
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceRequestBodyRequiredProperties'
+      responses:
+        '201':
+          description: Device successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /device/{id}:
+    delete:
+      tags:
+        - Device
+      operationId: deleteDevice
+      summary: Delete a device
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Device identifier to be deleted
+      responses:
+        '204':
+          description: Device successfully deleted (no content)
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      tags:
+        - Device
+      operationId: getDevice
+      summary: Get device by identifier
+      parameters:
+        - description: Device identifier
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A device
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+        - Device
+      operationId: updateDevice
+      summary: Update device
+      parameters:
+        - description: Device identifier to be updated
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceRequestBodyRequiredProperties'
+      responses:
+        '200':
+          description: Device successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      tags:
+        - Device
+      operationId: partialUpdateDevice
+      summary: Partially update device
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Device identifier to be partially updated
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceRequestBody'
+      responses:
+        '200':
+          description: Device successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Device:
+      properties:
+        brand:
+          description: Device brand
+          type: string
+        creationTime:
+          description: Creation time
+          type: string
+        id:
+          description: Device id
+          type: integer
+        name:
+          description: Device name
+          type: string
+      type: object
+    Devices:
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Device'
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+        totalElements:
+          description: Total number of items that meet the criteria
+          example: 10
+          type: integer
+      type: object
+    DeviceRequestBody:
+      properties:
+        brand:
+          description: Device brand
+          minLength: 1
+          maxLength: 255
+          type: string
+        name:
+          description: Device name
+          minLength: 1
+          maxLength: 255
+          type: string
+      type: object
+    DeviceRequestBodyRequiredProperties:
+      allOf:
+        - $ref: '#/components/schemas/DeviceRequestBody'
+        - type: object
+          required:
+            - brand
+            - name
+    DeviceSortProperty:
+      enum: [
+        name,
+        brand,
+        creationTime,
+        id
+      ]
+      default: id
+      type: string
+    Error:
+      properties:
+        detail:
+          description: Description of the problem.
+          example: No value present
+          type: string
+        instance:
+          description: The endpoint where the problem was encountered.
+          example: "/generate"
+          type: string
+        status:
+          description: http status code
+          example: 500
+          type: integer
+        title:
+          description: A short headline of the problem.
+          example: "NoSuchElementException"
+          type: string
+        timestamp:
+          description: ISO 8601 Date.
+          example: "2024-01-04T15:30:00Z"
+          type: string
+        trace:
+          description: opentelemetry TraceID, a unique identifier.
+          example: "0c6a41e22fe6478cc391908406ca9b8d"
+          type: string
+        type:
+          description: used to point the client to documentation where it is explained clearly what happened and why.
+          example: "about:blank"
+          type: string
+      type: object
+    Pageable:
+      type: object
+      properties:
+        pageNumber:
+          description: Current page number (starts from 0)
+          example: 0
+          type: integer
+        pageSize:
+          description: Number of items retrieved on this page
+          example: 1
+          type: integer
+    SortDirection:
+      type: string
+      enum: [ ASC, DESC ]
+      default: ASC

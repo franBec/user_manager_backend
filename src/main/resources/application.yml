@@ -1,0 +1,16 @@
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+spring:
+  application:
+    name: one-global-technical-assesment
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=MSSQLServer;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE;INIT=CREATE SCHEMA IF NOT EXISTS DBO
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+  h2:
+    console.enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
