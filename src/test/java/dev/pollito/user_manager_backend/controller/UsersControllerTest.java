@@ -2,11 +2,13 @@ package dev.pollito.user_manager_backend.controller;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import dev.pollito.user_manager_backend.model.SortDirection;
+import dev.pollito.user_manager_backend.model.User;
 import dev.pollito.user_manager_backend.model.UserRequestBody;
 import dev.pollito.user_manager_backend.model.UserRequestBodyMinimumRequired;
 import dev.pollito.user_manager_backend.model.UserSortProperty;
@@ -44,7 +46,10 @@ class UsersControllerTest {
 
   @Test
   void whenUsersIdGetThenReturnNotImplemented() {
-    assertEquals(HttpStatus.NOT_IMPLEMENTED, usersController.usersIdGet(1L).getStatusCode());
+    when(usersService.findById(anyLong())).thenReturn(mock(User.class));
+    ResponseEntity<User> response = usersController.usersIdGet(1L);
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertNotNull(response.getBody());
   }
 
   @Test

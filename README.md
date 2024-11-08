@@ -1,10 +1,10 @@
-# Device Manager API
+# user_manager_backend
 
 ## Overview
-This project is implemented in **Java Spring Boot 3** and provides a RESTful API for managing a users database, supporting CRUD operations.
+This project is implemented in **Java Spring Boot 3** and provides a RESTful API for managing a users' database.
 
 ## API Documentation
-The OpenAPI documentation for the API can be found in the `src/main/resources/openapi/deviceManager.yaml` file. This file provides detailed information on the endpoints, request/response formats, and models used in the API.
+The OpenAPI documentation for the API can be found in the `src/main/resources/openapi/userManagerBackend.yaml` file. This file contains detailed information on the endpoints, request/response formats, and models used in the API.
 
 ## Live Demo
 WIP

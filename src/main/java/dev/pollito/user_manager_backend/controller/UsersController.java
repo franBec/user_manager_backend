@@ -44,7 +44,7 @@ public class UsersController implements UsersApi {
 
   @Override
   public ResponseEntity<User> usersIdGet(Long id) {
-    return UsersApi.super.usersIdGet(id);
+    return ResponseEntity.ok(usersService.findById(id));
   }
 
   @Override

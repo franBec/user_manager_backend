@@ -3,6 +3,7 @@ package dev.pollito.user_manager_backend.controller.advice;
 import io.opentelemetry.api.trace.Span;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
+import java.util.NoSuchElementException;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,11 @@ public class GlobalControllerAdvice {
 
   @ExceptionHandler(NoResourceFoundException.class)
   public ProblemDetail handle(@NotNull NoResourceFoundException e) {
+    return buildProblemDetail(e, HttpStatus.NOT_FOUND);
+  }
+
+  @ExceptionHandler(NoSuchElementException.class)
+  public ProblemDetail handle(@NotNull NoSuchElementException e) {
     return buildProblemDetail(e, HttpStatus.NOT_FOUND);
   }
 

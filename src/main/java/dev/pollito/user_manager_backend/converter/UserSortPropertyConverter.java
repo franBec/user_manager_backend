@@ -6,7 +6,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DeviceSortPropertyConverter implements Converter<String, UserSortProperty> {
+public class UserSortPropertyConverter implements Converter<String, UserSortProperty> {
   @Override
   public UserSortProperty convert(@NotNull String source) {
     return UserSortProperty.fromValue(source);
