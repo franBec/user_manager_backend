@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
-  title: DeviceManager API
-  description: A RESTful API for managing a database of devices. Supports CRUD operations.
+  title: user_manager_backend API
+  description: A RESTful API for managing a database of users. Supports CRUD operations.
   version: 1.0.0
   contact:
     name: Pollito
@@ -9,12 +9,11 @@ info:
 servers:
   - url: 'http://localhost:8080'
 paths:
-  /device:
+  /users:
     get:
       tags:
-        - Device
-      operationId: getAll
-      summary: List all devices
+        - User
+      summary: List all users
       parameters:
         - description: Use this parameter to specify the page of your request
           in: query
@@ -35,25 +34,26 @@ paths:
           in: query
           name: sortProperty
           schema:
-            $ref: '#/components/schemas/DeviceSortProperty'
+            $ref: '#/components/schemas/UserSortProperty'
         - description: Use this parameter to specify the direction (asc or desc) of your request results
           in: query
           name: sortDirection
           schema:
             $ref: '#/components/schemas/SortDirection'
-        - description: Use this parameter to filter devices by brand (ignore case). If not used, no filtering will be done.
+        - description: Use this parameter to filter users by checking if provided string is part of email, name, or username (all ignore case). If not used, no filtering will be done.
           in: query
-          name: brand
+          name: q
           schema:
-            minLength: 1
+            minLength: 2
+            maxLength: 255
             type: string
       responses:
         '200':
-          description: List of all devices
+          description: List of all users
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Devices'
+                $ref: '#/components/schemas/Users'
         default:
           description: Error
           content:
@@ -62,44 +62,43 @@ paths:
                 $ref: '#/components/schemas/Error'
     post:
       tags:
-        - Device
-      operationId: addDevice
-      summary: Add device
+        - User
+      summary: Add user
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DeviceRequestBodyRequiredProperties'
+              $ref: '#/components/schemas/UserRequestBodyMinimumRequired'
       responses:
         '201':
-          description: Device successfully created
+          description: User successfully created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Device'
+                $ref: '#/components/schemas/User'
         default:
           description: Error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /device/{id}:
+  /users/{id}:
     delete:
       tags:
-        - Device
-      operationId: deleteDevice
-      summary: Delete a device
+        - User
+      summary: Delete a user
       parameters:
         - name: id
           in: path
           required: true
           schema:
+            format: int64
             type: integer
-          description: Device identifier to be deleted
+          description: User identifier to be deleted
       responses:
         '204':
-          description: Device successfully deleted (no content)
+          description: User successfully deleted (no content)
         default:
           description: Error
           content:
@@ -108,23 +107,23 @@ paths:
                 $ref: '#/components/schemas/Error'
     get:
       tags:
-        - Device
-      operationId: getDevice
-      summary: Get device by identifier
+        - User
+      summary: Get user by identifier
       parameters:
-        - description: Device identifier
+        - description: User identifier
           in: path
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       responses:
         '200':
-          description: A device
+          description: A user
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Device'
+                $ref: '#/components/schemas/User'
         default:
           description: Error
           content:
@@ -133,29 +132,29 @@ paths:
                 $ref: '#/components/schemas/Error'
     put:
       tags:
-        - Device
-      operationId: updateDevice
-      summary: Update device
+        - User
+      summary: Update user
       parameters:
-        - description: Device identifier to be updated
+        - description: User identifier to be updated
           in: path
           name: id
           required: true
           schema:
+            format: int64
             type: integer
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DeviceRequestBodyRequiredProperties'
+              $ref: '#/components/schemas/UserRequestBodyMinimumRequired'
       responses:
         '200':
-          description: Device successfully updated
+          description: User successfully updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Device'
+                $ref: '#/components/schemas/User'
         default:
           description: Error
           content:
@@ -164,29 +163,29 @@ paths:
                 $ref: '#/components/schemas/Error'
     patch:
       tags:
-        - Device
-      operationId: partialUpdateDevice
-      summary: Partially update device
+        - User
+      summary: Partially update user
       parameters:
         - name: id
           in: path
           required: true
           schema:
+            format: int64
             type: integer
-          description: Device identifier to be partially updated
+          description: User identifier to be partially updated
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DeviceRequestBody'
+              $ref: '#/components/schemas/UserRequestBody'
       responses:
         '200':
-          description: Device successfully updated
+          description: User successfully updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Device'
+                $ref: '#/components/schemas/User'
         default:
           description: Error
           content:
@@ -195,63 +194,44 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    Device:
+    Address:
+      description: User address
       properties:
-        brand:
-          description: Device brand
+        city:
+          description: Address city
+          example: "Gwenborough"
           type: string
-        creationTime:
-          description: Creation time
+        geo:
+          $ref: '#/components/schemas/Geo'
+        street:
+          description: Address street
+          example: "Kulas Light"
           type: string
-        id:
-          description: Device id
-          type: integer
-        name:
-          description: Device name
+        suite:
+          description: Address suit
+          example: "Apt. 556"
+          type: string
+        zipcode:
+          description: Adress zipcode
+          example: "92998-3874"
           type: string
       type: object
-    Devices:
+    Company:
+      description: User company
       properties:
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/Device'
-        pageable:
-          $ref: '#/components/schemas/Pageable'
-        totalElements:
-          description: Total number of items that meet the criteria
-          example: 10
-          type: integer
-      type: object
-    DeviceRequestBody:
-      properties:
-        brand:
-          description: Device brand
-          minLength: 1
-          maxLength: 255
+        bs:
+          description: Company business
+          example: "harness real-time e-markets"
+          type: string
+        catchPhrase:
+          description: Company catch phrase
+          example: "Multi-layered client-server neural-net"
           type: string
         name:
-          description: Device name
-          minLength: 1
-          maxLength: 255
+          description: Company name
+          example: "Romaguera-Crona"
           type: string
       type: object
-    DeviceRequestBodyRequiredProperties:
-      allOf:
-        - $ref: '#/components/schemas/DeviceRequestBody'
-        - type: object
-          required:
-            - brand
-            - name
-    DeviceSortProperty:
-      enum: [
-        name,
-        brand,
-        creationTime,
-        id
-      ]
-      default: id
-      type: string
     Error:
       properties:
         detail:
@@ -283,6 +263,18 @@ components:
           example: "about:blank"
           type: string
       type: object
+    Geo:
+      description: Address geolocation
+      properties:
+        lat:
+          description: Geolocation latitude
+          example: "-37.3159"
+          type: string
+        lng:
+          description: Geolocation longitude
+          example: "81.1496"
+          type: string
+      type: object
     Pageable:
       type: object
       properties:
@@ -298,3 +290,74 @@ components:
       type: string
       enum: [ ASC, DESC ]
       default: ASC
+    User:
+      allOf:
+        - $ref: '#/components/schemas/UserRequestBody'
+        - type: object
+          properties:
+            creationTime:
+              description: Creation time in ISO 8601 format
+              example: "2023-11-01T08:30:00"
+              type: string
+            id:
+              description: User id
+              example: 1
+              format: int64
+              type: integer
+    UserRequestBody:
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+        company:
+          $ref: '#/components/schemas/Company'
+        email:
+          description: User email
+          example: "Sincere@april.biz"
+          type: string
+        name:
+          description: User name
+          example: "Leanne Graham"
+          type: string
+        phone:
+          description: User phone
+          example: "1-770-736-8031 x56442"
+          type: string
+        username:
+          description: User username
+          example: "Bret"
+          type: string
+        website:
+          description: User website
+          example: "hildegard.org"
+          type: string
+      type: object
+    UserRequestBodyMinimumRequired:
+      allOf:
+        - $ref: '#/components/schemas/UserRequestBody'
+        - type: object
+          required:
+            - email
+            - name
+            - username
+    Users:
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+        totalElements:
+          description: Total number of items that meet the criteria
+          example: 10
+          type: integer
+      type: object
+    UserSortProperty:
+      enum: [
+        email,
+        id,
+        name,
+        username
+      ]
+      default: id
+      type: string

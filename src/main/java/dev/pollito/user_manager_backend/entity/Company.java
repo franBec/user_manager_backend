@@ -7,7 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,24 +15,25 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 @Entity
-@Table(name = "devices", schema = "dbo")
+@Table(name = "companies")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Device implements Serializable {
+public class Company implements Serializable {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   Long id;
 
-  @Column(name = "name", nullable = false)
+  @Column(name = "name")
   String name;
 
-  @Column(name = "brand", nullable = false)
-  String brand;
+  @Column(name = "catch_phrase")
+  String catchPhrase;
 
-  @Column(name = "creation_time", nullable = false, updatable = false)
-  LocalDateTime creationTime = LocalDateTime.now();
+  @Column(name = "bs")
+  String bs;
 }

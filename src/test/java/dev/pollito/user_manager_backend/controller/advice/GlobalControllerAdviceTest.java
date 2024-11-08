@@ -3,7 +3,6 @@ package dev.pollito.user_manager_backend.controller.advice;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
-import java.util.NoSuchElementException;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,13 +30,6 @@ class GlobalControllerAdviceTest {
   @Test
   void whenNoResourceFoundExceptionThenReturnProblemDetail() {
     NoResourceFoundException e = mock(NoResourceFoundException.class);
-    ProblemDetail response = globalControllerAdvice.handle(e);
-    problemDetailAssertions(response, e, HttpStatus.NOT_FOUND);
-  }
-
-  @Test
-  void whenNoSuchElementExceptionThenReturnProblemDetail() {
-    NoSuchElementException e = mock(NoSuchElementException.class);
     ProblemDetail response = globalControllerAdvice.handle(e);
     problemDetailAssertions(response, e, HttpStatus.NOT_FOUND);
   }

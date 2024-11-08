@@ -1,4 +1,4 @@
-package dev.pollito.user_manager_backend.filter.config;
+package dev.pollito.user_manager_backend.config;
 
 import dev.pollito.user_manager_backend.filter.LogFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
