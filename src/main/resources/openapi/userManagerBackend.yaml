@@ -14,6 +14,7 @@ paths:
       tags:
         - User
       summary: List all users
+      operationId: findAll
       parameters:
         - description: Use this parameter to specify the page of your request
           in: query
@@ -63,7 +64,8 @@ paths:
     post:
       tags:
         - User
-      summary: Add user
+      summary: Create user
+      operationId: create
       requestBody:
         required: true
         content:
@@ -88,6 +90,7 @@ paths:
       tags:
         - User
       summary: Delete a user
+      operationId: deleteById
       parameters:
         - name: id
           in: path
@@ -109,6 +112,7 @@ paths:
       tags:
         - User
       summary: Get user by identifier
+      operationId: findById
       parameters:
         - description: User identifier
           in: path
@@ -134,6 +138,7 @@ paths:
       tags:
         - User
       summary: Update user
+      operationId: updateById
       parameters:
         - description: User identifier to be updated
           in: path
@@ -165,6 +170,7 @@ paths:
       tags:
         - User
       summary: Partially update user
+      operationId: partialUpdateById
       parameters:
         - name: id
           in: path

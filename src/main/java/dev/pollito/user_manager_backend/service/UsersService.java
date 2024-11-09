@@ -7,5 +7,5 @@ import org.springframework.data.domain.PageRequest;
 public interface UsersService {
   User findById(Long id);
 
-  Users findAllByQueryContainingIgnoreCase(PageRequest pageRequest, String q);
+  Users findAll(PageRequest pageRequest, String q);
 }

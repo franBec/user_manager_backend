@@ -43,6 +43,6 @@ class UsersServiceTest {
   void whenFindAllThenReturnUsers() {
     when(userRepository.findAllByQueryContainingIgnoreCase(any(PageRequest.class), anyString()))
         .thenReturn((new PageImpl<>(List.of(), PageRequest.of(0, 10), 0)));
-    assertNotNull(usersService.findAllByQueryContainingIgnoreCase(mock(PageRequest.class), ""));
+    assertNotNull(usersService.findAll(mock(PageRequest.class), ""));
   }
 }

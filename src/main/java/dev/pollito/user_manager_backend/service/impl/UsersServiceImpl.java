@@ -21,7 +21,7 @@ public class UsersServiceImpl implements UsersService {
   }
 
   @Override
-  public Users findAllByQueryContainingIgnoreCase(PageRequest pageRequest, String q) {
+  public Users findAll(PageRequest pageRequest, String q) {
     return userModelMapper.map(userRepository.findAllByQueryContainingIgnoreCase(pageRequest, q));
   }
 }

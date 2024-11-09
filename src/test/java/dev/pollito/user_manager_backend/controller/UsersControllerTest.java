@@ -31,45 +31,44 @@ class UsersControllerTest {
 
   @Test
   void whenFindAllThenReturnOk() {
-    when(usersService.findAllByQueryContainingIgnoreCase(any(PageRequest.class), anyString()))
-        .thenReturn(mock(Users.class));
+    when(usersService.findAll(any(PageRequest.class), anyString())).thenReturn(mock(Users.class));
     ResponseEntity<Users> response =
-        usersController.usersGet(0, 10, UserSortProperty.ID, SortDirection.ASC, "brand");
+        usersController.findAll(0, 10, UserSortProperty.ID, SortDirection.ASC, "brand");
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertNotNull(response.getBody());
   }
 
   @Test
-  void whenUsersIdDeleteThenReturnNotImplemented() {
-    assertEquals(HttpStatus.NOT_IMPLEMENTED, usersController.usersIdDelete(1L).getStatusCode());
+  void whenDeleteByIdThenReturnNotImplemented() {
+    assertEquals(HttpStatus.NOT_IMPLEMENTED, usersController.deleteById(1L).getStatusCode());
   }
 
   @Test
-  void whenUsersIdGetThenReturnNotImplemented() {
+  void whenFindByIdThenReturnNotImplemented() {
     when(usersService.findById(anyLong())).thenReturn(mock(User.class));
-    ResponseEntity<User> response = usersController.usersIdGet(1L);
+    ResponseEntity<User> response = usersController.findById(1L);
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertNotNull(response.getBody());
   }
 
   @Test
-  void whenUsersIdPatchThenReturnNotImplemented() {
+  void whenPartialUpdateByIdThenReturnNotImplemented() {
     assertEquals(
         HttpStatus.NOT_IMPLEMENTED,
-        usersController.usersIdPatch(1L, mock(UserRequestBody.class)).getStatusCode());
+        usersController.partialUpdateById(1L, mock(UserRequestBody.class)).getStatusCode());
   }
 
   @Test
-  void whenUsersIdPutThenReturnNotImplemented() {
+  void whenUpdateByIdThenReturnNotImplemented() {
     assertEquals(
         HttpStatus.NOT_IMPLEMENTED,
-        usersController.usersIdPut(1L, mock(UserRequestBodyMinimumRequired.class)).getStatusCode());
+        usersController.updateById(1L, mock(UserRequestBodyMinimumRequired.class)).getStatusCode());
   }
 
   @Test
-  void whenUsersPostThenReturnNotImplemented() {
+  void whenCreateThenReturnNotImplemented() {
     assertEquals(
         HttpStatus.NOT_IMPLEMENTED,
-        usersController.usersPost(mock(UserRequestBodyMinimumRequired.class)).getStatusCode());
+        usersController.create(mock(UserRequestBodyMinimumRequired.class)).getStatusCode());
   }
 }
