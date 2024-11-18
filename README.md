@@ -1,13 +1,16 @@
 # user_manager_backend
 
 ## Overview
-This project is implemented in **Java Spring Boot 3** and provides a RESTful API for managing a users' database.
+This project is implemented in **Java Spring Boot 3** and provides a RESTful API for querying a users' database.
 
 ## API Documentation
-The OpenAPI documentation for the API can be found in the `src/main/resources/openapi/userManagerBackend.yaml` file. This file contains detailed information on the endpoints, request/response formats, and models used in the API.
+The OpenAPI documentation for the API can be found in the [src/main/resources/openapi/userManagerBackend.yaml file](https://github.com/franBec/user_manager_backend/blob/main/src/main/resources/openapi/userManagerBackend.yaml).
 
 ## Live Demo
-WIP
+`https://user-manager-backend-den3.onrender.com`
+
+It is hosted on a [render](https://dashboard.render.com/) free instance.
+- free instances will spin down with inactivity, which can delay requests by 50 seconds or more.
 
 ## Getting Started
 
