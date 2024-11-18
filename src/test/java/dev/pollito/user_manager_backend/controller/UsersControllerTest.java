@@ -9,8 +9,6 @@ import static org.mockito.Mockito.when;
 
 import dev.pollito.user_manager_backend.model.SortDirection;
 import dev.pollito.user_manager_backend.model.User;
-import dev.pollito.user_manager_backend.model.UserRequestBody;
-import dev.pollito.user_manager_backend.model.UserRequestBodyMinimumRequired;
 import dev.pollito.user_manager_backend.model.UserSortProperty;
 import dev.pollito.user_manager_backend.model.Users;
 import dev.pollito.user_manager_backend.service.UsersService;
@@ -39,36 +37,10 @@ class UsersControllerTest {
   }
 
   @Test
-  void whenDeleteByIdThenReturnNotImplemented() {
-    assertEquals(HttpStatus.NOT_IMPLEMENTED, usersController.deleteById(1L).getStatusCode());
-  }
-
-  @Test
-  void whenFindByIdThenReturnNotImplemented() {
+  void whenFindByIdThenReturnOK() {
     when(usersService.findById(anyLong())).thenReturn(mock(User.class));
     ResponseEntity<User> response = usersController.findById(1L);
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertNotNull(response.getBody());
-  }
-
-  @Test
-  void whenPartialUpdateByIdThenReturnNotImplemented() {
-    assertEquals(
-        HttpStatus.NOT_IMPLEMENTED,
-        usersController.partialUpdateById(1L, mock(UserRequestBody.class)).getStatusCode());
-  }
-
-  @Test
-  void whenUpdateByIdThenReturnNotImplemented() {
-    assertEquals(
-        HttpStatus.NOT_IMPLEMENTED,
-        usersController.updateById(1L, mock(UserRequestBodyMinimumRequired.class)).getStatusCode());
-  }
-
-  @Test
-  void whenCreateThenReturnNotImplemented() {
-    assertEquals(
-        HttpStatus.NOT_IMPLEMENTED,
-        usersController.create(mock(UserRequestBodyMinimumRequired.class)).getStatusCode());
   }
 }

@@ -61,53 +61,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-    post:
-      tags:
-        - User
-      summary: Create user
-      operationId: create
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserRequestBodyMinimumRequired'
-      responses:
-        '201':
-          description: User successfully created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-        default:
-          description: Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
   /users/{id}:
-    delete:
-      tags:
-        - User
-      summary: Delete a user
-      operationId: deleteById
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            format: int64
-            type: integer
-          description: User identifier to be deleted
-      responses:
-        '204':
-          description: User successfully deleted (no content)
-        default:
-          description: Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
     get:
       tags:
         - User
@@ -124,70 +78,6 @@ paths:
       responses:
         '200':
           description: A user
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-        default:
-          description: Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-    put:
-      tags:
-        - User
-      summary: Update user
-      operationId: updateById
-      parameters:
-        - description: User identifier to be updated
-          in: path
-          name: id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserRequestBodyMinimumRequired'
-      responses:
-        '200':
-          description: User successfully updated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-        default:
-          description: Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-    patch:
-      tags:
-        - User
-      summary: Partially update user
-      operationId: partialUpdateById
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            format: int64
-            type: integer
-          description: User identifier to be partially updated
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserRequestBody'
-      responses:
-        '200':
-          description: User successfully updated
           content:
             application/json:
               schema:
@@ -297,29 +187,24 @@ components:
       enum: [ ASC, DESC ]
       default: ASC
     User:
-      allOf:
-        - $ref: '#/components/schemas/UserRequestBody'
-        - type: object
-          properties:
-            creationTime:
-              description: Creation time in ISO 8601 format
-              example: "2023-11-01T08:30:00"
-              type: string
-            id:
-              description: User id
-              example: 1
-              format: int64
-              type: integer
-    UserRequestBody:
       properties:
         address:
           $ref: '#/components/schemas/Address'
         company:
           $ref: '#/components/schemas/Company'
+        creationTime:
+          description: Creation time in ISO 8601 format
+          example: "2023-11-01T08:30:00"
+          type: string
         email:
           description: User email
           example: "Sincere@april.biz"
           type: string
+        id:
+          description: User id
+          example: 1
+          format: int64
+          type: integer
         name:
           description: User name
           example: "Leanne Graham"
@@ -336,15 +221,6 @@ components:
           description: User website
           example: "hildegard.org"
           type: string
-      type: object
-    UserRequestBodyMinimumRequired:
-      allOf:
-        - $ref: '#/components/schemas/UserRequestBody'
-        - type: object
-          required:
-            - email
-            - name
-            - username
     Users:
       properties:
         content:
