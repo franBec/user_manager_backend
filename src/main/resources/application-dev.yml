@@ -1,6 +1,6 @@
 cors:
-  allowed-origins: https://user-manager-frontend-eight.vercel.app
-  allowed-methods: GET
+  allowed-origins: http://localhost:3000
+  allowed-methods: GET, POST, PUT, DELETE, PATCH
   allowed-headers: "*"
   allow-credentials: true
 logging:
