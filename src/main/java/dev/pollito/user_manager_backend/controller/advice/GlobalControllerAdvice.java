@@ -1,5 +1,6 @@
 package dev.pollito.user_manager_backend.controller.advice;
 
+import dev.pollito.user_manager_backend.exception.JsonPlaceholderException;
 import io.opentelemetry.api.trace.Span;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
@@ -36,6 +37,12 @@ public class GlobalControllerAdvice {
   @ExceptionHandler(MethodArgumentTypeMismatchException.class)
   public ProblemDetail handle(@NotNull MethodArgumentTypeMismatchException e) {
     return buildProblemDetail(e, HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(JsonPlaceholderException.class)
+  public ProblemDetail handle(@NotNull JsonPlaceholderException e) {
+    return buildProblemDetail(
+        e, e.getStatus() == 400 ? HttpStatus.BAD_REQUEST : HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
   @ExceptionHandler(Exception.class)

@@ -8,8 +8,6 @@ import dev.pollito.user_manager_backend.model.Users;
 import dev.pollito.user_manager_backend.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,13 +24,7 @@ public class UsersController implements UsersApi {
       @NotNull SortDirection sortDirection,
       String q) {
     return ResponseEntity.ok(
-        usersService.findAll(
-            PageRequest.of(
-                pageNumber,
-                pageSize,
-                Sort.Direction.fromString(sortDirection.getValue()),
-                sortProperty.getValue()),
-            q));
+        usersService.findAll(pageNumber, pageSize, sortProperty, sortDirection, q));
   }
 
   @Override

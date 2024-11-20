@@ -17,7 +17,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -29,9 +28,15 @@ class UsersControllerTest {
 
   @Test
   void whenFindAllThenReturnOk() {
-    when(usersService.findAll(any(PageRequest.class), anyString())).thenReturn(mock(Users.class));
+    when(usersService.findAll(
+            any(Integer.class),
+            any(Integer.class),
+            any(UserSortProperty.class),
+            any(SortDirection.class),
+            anyString()))
+        .thenReturn(mock(Users.class));
     ResponseEntity<Users> response =
-        usersController.findAll(0, 10, UserSortProperty.ID, SortDirection.ASC, "brand");
+        usersController.findAll(0, 10, UserSortProperty.ID, SortDirection.ASC, "q");
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertNotNull(response.getBody());
   }

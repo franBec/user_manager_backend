@@ -18,7 +18,10 @@ public class LogAspect {
   @Pointcut("execution(public * dev.pollito.user_manager_backend.controller..*.*(..))")
   public void controllerPublicMethodsPointcut() {}
 
-  @Before("controllerPublicMethodsPointcut()")
+  @Pointcut("execution(public * com.typicode.jsonplaceholder.api.*.*(..))")
+  public void jsonPlaceholderApiMethodsPointcut() {}
+
+  @Before("controllerPublicMethodsPointcut() || jsonPlaceholderApiMethodsPointcut()")
   public void logBefore(@NotNull JoinPoint joinPoint) {
     log.info(
         "[{}] Args: {}",
@@ -26,7 +29,9 @@ public class LogAspect {
         Arrays.toString(joinPoint.getArgs()));
   }
 
-  @AfterReturning(pointcut = "controllerPublicMethodsPointcut()", returning = "result")
+  @AfterReturning(
+      pointcut = "controllerPublicMethodsPointcut() || jsonPlaceholderApiMethodsPointcut()",
+      returning = "result")
   public void logAfterReturning(@NotNull JoinPoint joinPoint, Object result) {
     log.info("[{}] Response: {}", joinPoint.getSignature().toShortString(), result);
   }

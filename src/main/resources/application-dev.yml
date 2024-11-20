@@ -3,19 +3,9 @@ cors:
   allowed-methods: GET, POST, PUT, DELETE, PATCH
   allowed-headers: "*"
   allow-credentials: true
-logging:
-  level:
-    org.hibernate.SQL: DEBUG
+jsonplaceholder:
+  baseUrl: https://jsonplaceholder.typicode.com/
+  expiresAfter: 24 #hours
 spring:
   application:
     name: user_manager_backend
-  datasource:
-    url: jdbc:h2:mem:testdb;MODE=MSSQLServer;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE;INIT=CREATE SCHEMA IF NOT EXISTS DBO
-    username: sa
-    password: password
-    driverClassName: org.h2.Driver
-  h2:
-    console.enabled: true
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    defer-datasource-initialization: true
