@@ -31,35 +31,30 @@ class GlobalControllerAdviceTest {
   @Test
   void whenNoResourceFoundExceptionThenReturnProblemDetail() {
     NoResourceFoundException e = mock(NoResourceFoundException.class);
-    ProblemDetail response = globalControllerAdvice.handle(e);
-    problemDetailAssertions(response, e, HttpStatus.NOT_FOUND);
+    problemDetailAssertions(globalControllerAdvice.handle(e), e, HttpStatus.NOT_FOUND);
   }
 
   @Test
   void whenNoSuchElementExceptionThenReturnProblemDetail() {
     NoSuchElementException e = mock(NoSuchElementException.class);
-    ProblemDetail response = globalControllerAdvice.handle(e);
-    problemDetailAssertions(response, e, HttpStatus.NOT_FOUND);
+    problemDetailAssertions(globalControllerAdvice.handle(e), e, HttpStatus.NOT_FOUND);
   }
 
   @Test
   void whenMethodArgumentNotValidExceptionThenReturnProblemDetail() {
     MethodArgumentNotValidException e = mock(MethodArgumentNotValidException.class);
-    ProblemDetail response = globalControllerAdvice.handle(e);
-    problemDetailAssertions(response, e, HttpStatus.BAD_REQUEST);
+    problemDetailAssertions(globalControllerAdvice.handle(e), e, HttpStatus.BAD_REQUEST);
   }
 
   @Test
   void whenMethodArgumentTypeMismatchExceptionThenReturnProblemDetail() {
     MethodArgumentTypeMismatchException e = mock(MethodArgumentTypeMismatchException.class);
-    ProblemDetail response = globalControllerAdvice.handle(e);
-    problemDetailAssertions(response, e, HttpStatus.BAD_REQUEST);
+    problemDetailAssertions(globalControllerAdvice.handle(e), e, HttpStatus.BAD_REQUEST);
   }
 
   @Test
   void whenExceptionThenReturnProblemDetail() {
     Exception e = mock(Exception.class);
-    ProblemDetail response = globalControllerAdvice.handle(e);
-    problemDetailAssertions(response, e, HttpStatus.INTERNAL_SERVER_ERROR);
+    problemDetailAssertions(globalControllerAdvice.handle(e), e, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }
