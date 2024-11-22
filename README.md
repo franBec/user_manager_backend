@@ -1,7 +1,17 @@
 # user_manager_backend
 
-## Overview
+## Project Overview
 This project is implemented in **Java Spring Boot 3** and provides a RESTful API for querying a users' database.
+
+- Is a demonstration of how to consume and create an API following [Design by Contract principles](https://en.wikipedia.org/wiki/Design_by_contract).
+- You can read more about the creation of this repo in my [Spring Boot Development](https://pollito.dev/en/categories/spring-boot-development/) blog series.
+
+## Branch Overview
+
+- In the main branch, users are obtained from a mocked database.
+- In the feature/feignClient branch, users are obtained from an external API.
+
+![branch-overview](/assets/images/Untitled-2024-11-22-2023.jpg)
 
 ## API Documentation
 The OpenAPI documentation for the API can be found in the [src/main/resources/openapi/userManagerBackend.yaml file](https://github.com/franBec/user_manager_backend/blob/main/src/main/resources/openapi/userManagerBackend.yaml).
@@ -10,7 +20,7 @@ The OpenAPI documentation for the API can be found in the [src/main/resources/op
 `https://user-manager-backend-den3.onrender.com`
 
 It is hosted on a [render](https://dashboard.render.com/) free instance.
-- free instances will spin down with inactivity, which can delay requests by 50 seconds or more.
+- free instances will spin down with inactivity, which can delay requests of some minutes.
 
 ## Getting Started
 
