@@ -44,7 +44,7 @@ It is hosted on a [render](https://dashboard.render.com/) free instance.
     ```bash
     mvn spring-boot:run
     ```
-### Run with Maven
+### Run with Docker
 1. Clone the repository:
      ```bash
      git clone https://github.com/franBec/user_manager_backend
